@@ -6,7 +6,7 @@ screen = pygame.display.set_mode((640, 480))
 
 
 screen.fill((240, 240, 240))
-b = world.building((2, 8), (2, 8), (20, 50))
+b = world.new_object((2, 8), (2, 8), (20, 50))
 visual.draw_object(screen, b)
 
 pygame.display.flip()

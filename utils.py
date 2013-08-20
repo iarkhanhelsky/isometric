@@ -1,11 +1,10 @@
 from random import randint  
 
-CELL_WITH = 32
-CELL_HEIGHT = 16
+CELL_WITH = 16
+CELL_HEIGHT = 8
 
 COLORS = 255 * 255 * 255
 
-def ij_to_xy(i, j): return (32 * (i + j) // 2, 16 * (j - i) // 2)
+def ij_to_xy(i, j): return (8 * (i + j), 4 * (j - i) )
 
-def rand(n): return randint(0, n)
-def randclr(): return rand(255 * 255 * 255)
+def randclr(): return randint(0, 255 * 255 * 255)

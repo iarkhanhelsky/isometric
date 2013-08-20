@@ -8,6 +8,8 @@ def place(object, at):
 	((i, j, rows, cols), height, color) = object
 	return (at + (rows, cols), height, color)
 
+def populate(n): return [place(obj,(randint(0, 200), randint(0, 200))) for obj in [ new_object((2,8), (2, 8), (20, 50)) for _ in range(n)]]	
+
  
 def cmp_objects(a, b): 
 	((ai, aj, ar, ac), _, _) = a

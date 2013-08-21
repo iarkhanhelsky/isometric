@@ -12,9 +12,9 @@ def draw_object(screen, object):
 
 	basement  = [ ij_to_xy(*p) for p in [(i, j), (i, j + cols), (i + rows, j + cols), (i + rows, j )] ]
 
-	top = [vecadd(p, minus_height) for p in basement]
+	top   = [ vecadd(p, minus_height) for p in basement ]
 	front = [ basement[1], basement[2], top[2], top[1] ]
-	left = [basement[0], basement[1], top[1], top[0]]
+	left  = [ basement[0], basement[1], top[1], top[0] ]
 
 	for side in [top, front, left]:
 		pygame.draw.polygon(screen, color, side, 0)

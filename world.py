@@ -16,3 +16,23 @@ def cmp_objects(a, b):
 	((bi, bj, br, bc), _, _) = b
 
 	return rule(ai + ar, aj + ac, 300) - rule(bi + br, bj + bc, 300)
+
+def road_populate(w, stop_rows, stop_cols, i0, j0, rows, cols):
+    if (rows - i0) > stop_rows and (cols - j0) > stop_cols:
+
+        horisontal = randint(0, 1) == 0
+        if horisontal:
+            i = randint(i0, rows-1)
+            road = (i, j0, 1, cols)
+            for j in range(j0, cols):
+                w[i][j] = 1
+            return [ road_populate(w, stop_rows, stop_cols, i0, j0, i, cols), road_populate(w, stop_rows, stop_cols, i+1, j0, rows, cols), road ]
+        else:            
+            j = randint(j0, cols-1)
+            road = (i0, j, 1, rows-1)
+            for i in range(i0, rows):
+                w[i][j] = 1            
+            return [road_populate(w, stop_rows, stop_cols, i0, j0, rows, j), road_populate(w, stop_rows, stop_cols, i0, j + 1, rows, cols), road]
+    else:
+        return []            
+      

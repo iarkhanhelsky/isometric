@@ -29,7 +29,7 @@ def road_populate(w, stop_rows, stop_cols, i0, j0, rows, cols):
             return [ road_populate(w, stop_rows, stop_cols, i0, j0, i, cols), road_populate(w, stop_rows, stop_cols, i+1, j0, rows, cols), road ]
         else:            
             j = randint(j0, cols-1)
-            road = (i0, j, 1, rows-1)
+            road = (i0, j, rows-1, 1)
             for i in range(i0, rows):
                 w[i][j] = 1            
             return [road_populate(w, stop_rows, stop_cols, i0, j0, rows, j), road_populate(w, stop_rows, stop_cols, i0, j + 1, rows, cols), road]

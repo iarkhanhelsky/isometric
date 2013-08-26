@@ -14,7 +14,10 @@ def draw(screen, objects):
 
 screen = pygame.display.set_mode((1920, 1080))
 screen.fill((240, 240, 240))
-objects = sorted([(x, 0, 0xCCCCCC) for x in flatten(world.road_populate([[0 for _ in range(300)] for _ in range(300)], 10, 10, 0, 0, 300, 300)) ], key=cmp_to_key(world.cmp_objects))
+
+roads = [(x, 0, 0xCCCCCC) for x in flatten(world.road_populate([[0 for _ in range(300)] for _ in range(300)], 10, 10, 0, 0, 300, 300)) ]
+buildings = world.populate(100, 300, 300)
+objects = sorted(roads + buildings, key=cmp_to_key(world.cmp_objects))
 
 
 

@@ -11,11 +11,11 @@ def place(object, at):
 def populate(n, rows, cols): return [place(obj,(randint(0, rows), randint(0, cols))) for obj in [ new_object((2,8), (2, 8), (20, 50)) for _ in range(n)]]	
 
  
-def cmp_objects(a, b): 
+def cmp_objects(a, b, max): 
 	((ai, aj, ar, ac), _, _) = a
 	((bi, bj, br, bc), _, _) = b
 
-	return rule(ai + ar, aj + ac, 300) - rule(bi + br, bj + bc, 300)
+	return rule(ai + ar, aj , max) - rule(bi + br, bj , max)
 
 def road_populate(w, stop_rows, stop_cols, i0, j0, rows, cols):
     if (rows - i0) > stop_rows and (cols - j0) > stop_cols:

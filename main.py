@@ -4,10 +4,8 @@ import visual
 from functools import cmp_to_key
 from utils import flatten
 
-
 ROWS = 300
 COLS = 300
-
 BUILDINGS = 100
 
 
@@ -21,7 +19,7 @@ def draw(screen, objects):
 def cmp_objects(a, b): return world.cmp_objects(a, b, ROWS * COLS)
 
 
-screen = pygame.display.set_mode((1920, 1080))
+screen = pygame.display.set_mode((600, 800))
 screen.fill((240, 240, 240))
 
 roads = [(x, 0, 0xCCCCCC) for x in

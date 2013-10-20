@@ -2,8 +2,8 @@ from random import randint
 import json
 from functools import reduce
 
-CELL_WITH = 16
-CELL_HEIGHT = 8
+CELL_WITH = 32
+CELL_HEIGHT = 16
 
 COLORS = 255 * 255 * 255
 
@@ -25,6 +25,3 @@ def parse_config(file):
         h = json.loads(data.read())
 
     return h
-
-def merge(cfg_a, cfg_b):
-    return

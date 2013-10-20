@@ -1,5 +1,4 @@
 from utils import randclr
-from utils import flatten
 from random import randint
 from rules import rule
 
@@ -19,8 +18,8 @@ def populate(n, rows, cols):
 
 
 def cmp_objects(a, b, max_rows):
-    ((ai, aj, ar, ac), _, _) = a
-    ((bi, bj, br, bc), _, _) = b
+    ((ai, aj, ar, ac, _), _, _) = a
+    ((bi, bj, br, bc, _), _, _) = b
 
     return rule(ai + ar, aj, max_rows) - rule(bi + br, bj, max_rows)
 
@@ -28,7 +27,7 @@ def cmp_objects(a, b, max_rows):
 def road_populate(w, stop_rows, stop_cols, i0, j0, rows, cols):
     if (rows - i0) > stop_rows and (cols - j0) > stop_cols:
 
-        horizontal = randint(0, 1) == 0
+        horizontal = randint(0, 1)
         if horizontal:
             i = randint(i0, rows - 1)
             road = (i, j0, 1, cols)
@@ -41,7 +40,7 @@ def road_populate(w, stop_rows, stop_cols, i0, j0, rows, cols):
             road = (i0, j, rows - 1, 1)
             for i in range(i0, rows):
                 w[i][j] = 1
-            return flatten([road_populate(w, stop_rows, stop_cols, i0, j0, rows, j),
-                            road_populate(w, stop_rows, stop_cols, i0, j + 1, rows, cols), road])
+            return [road_populate(w, stop_rows, stop_cols, i0, j0, rows, j),
+                    road_populate(w, stop_rows, stop_cols, i0, j + 1, rows, cols), road]
     else:
         return []

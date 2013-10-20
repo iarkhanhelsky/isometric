@@ -8,11 +8,11 @@ def vecadd(a, b):
 
 
 def draw_object(screen, obj):
-    ((i, j, rows, cols), height, color) = obj
+    ((i, j, rows, cols, level), height, color) = obj
 
     minus_height = (0, -height)
 
-    basement = [ij_to_xy(*p) for p in [(i, j), (i, j + cols), (i + rows, j + cols), (i + rows, j)]]
+    basement = [vecadd(ij_to_xy(*p), (0, -level)) for p in [(i, j), (i, j + cols), (i + rows, j + cols), (i + rows, j)]]
 
     top = [vecadd(p, minus_height) for p in basement]
     front = [basement[1], basement[2], top[2], top[1]]

@@ -5,12 +5,12 @@ from rules import rule
 
 
 def new_object(rows, cols, height):
-    return (0, 0, randint(*rows), randint(*cols)), randint(*height), randclr()
+    return (0, 0, randint(*rows), randint(*cols), 0), randint(*height), randclr()
 
 
 def place(obj, at):
-    ((i, j, rows, cols), height, color) = obj
-    return at + (rows, cols), height, color
+    ((i, j, rows, cols, lev), height, color) = obj
+    return at + (rows, cols, lev), height, color
 
 
 def populate(n, rows, cols):

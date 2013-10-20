@@ -6,7 +6,7 @@ import visual
 from visual import vecadd
 from functools import cmp_to_key
 
-(ROWS, COLS, BUILDINGS) = (300, 300, 100)
+(ROWS, COLS, BUILDINGS) = (300, 300, 500)
 
 
 def draw(world_objects):
@@ -31,12 +31,17 @@ def draw(world_objects):
 def cmp_objects(a, b):
     return world.cmp_objects(a, b, ROWS * COLS)
 
+def get_default_move(s, v):
+    (_, _, w_s, h_s) = s.get_rect()
+    (_, _, w_v, h_v) = v.get_rect()
+
+    return (w_s - w_v) / 2, (h_s - h_v) / 2
 
 objects = sorted(
     [
-        ((0, 0, 300, 200,  0),  0, 0xCCCCCC),
-        ((0, 0, 100, 100,  0),  0, 0xFF4040),
-        ((0, 0, 50,   50,  0), 10, 0xFF0FFF)
+        ((0, 0, 300, 300,  0),   0, 0xCCCCCC),
+        ((0, 0, 100, 100,  0),   0, 0xFF4040),
+        ((0, 0, 50,   50,  0), 100, 0xFF0FFF)
     ], key=cmp_to_key(cmp_objects))
 print(objects)
 surf = draw(objects)
@@ -49,7 +54,7 @@ redraw = True
 
 screen = pygame.display.set_mode((1600, 900))
 screen.fill((240, 240, 240))
-move = (0, 0)
+move = get_default_move(screen, surf)
 
 #noinspection PyArgumentList
 pygame.key.set_repeat(500, 30)

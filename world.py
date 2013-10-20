@@ -1,3 +1,4 @@
+from pygame.rect import Rect
 from utils import randclr
 from random import randint
 from rules import rule
@@ -20,8 +21,12 @@ def populate(n, rows, cols):
 def cmp_objects(a, b, max_rows):
     ((ai, aj, ar, ac, _), _, _) = a
     ((bi, bj, br, bc, _), _, _) = b
-
-    return rule(ai + ar, aj, max_rows) - rule(bi + br, bj, max_rows)
+    if Rect((ai, aj, ar, ac)).contains(bi, bj, br, bc):
+        return -1
+    elif Rect(bi, bj, br, bc).contains(ai, aj, ar, ac):
+        return 1
+    else:
+        return rule(ai + ar, aj, max_rows) - rule(bi + br, bj, max_rows)
 
 
 def road_populate(w, stop_rows, stop_cols, i0, j0, rows, cols):

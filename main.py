@@ -9,9 +9,23 @@ from functools import cmp_to_key
 (ROWS, COLS, BUILDINGS) = (300, 300, 100)
 
 
-def draw(view, world_objects):
-    for obj in world_objects:
-        visual.draw_object(view, obj)
+def draw(world_objects):
+    d = [visual.draw_object(obj) for obj in world_objects]
+    (min_x, min_y, max_x, max_y) = (None, None, None, None)
+    for (move, surf) in d:
+        min_x = move[0] if min_x is None or min_x > move[0] else min_x
+        min_y = move[1] if min_y is None or min_y > move[1] else min_y
+        max_x = move[0] + surf.get_rect().width if max_x is None or max_x < move[0] + surf.get_rect().width else max_x
+        max_y = move[1] + surf.get_rect().height if max_y is None or max_y < move[1] + surf.get_rect().height else max_y
+
+    view = Surface((max_x - min_x, max_y - min_y))
+    view.fill(0xFF01FF)
+    view.set_colorkey(0xFF01FF)
+    print((min_x, min_y))
+    for (move, surf) in d:
+        view.blit(surf, vecadd((-min_x, -min_y), move))
+
+    return view
 
 
 def cmp_objects(a, b):
@@ -20,22 +34,22 @@ def cmp_objects(a, b):
 
 objects = sorted(
     [
-        ((120, 0, 100, 100,  0), 96, 0x404040),
-        ((120, 0, 100, 100, 96),  0, 0x10FF10),
-        ((60,  0, 300, 300,  0),  0, 0x10FF10)
+        ((0, 0, 300, 200,  0),  0, 0xCCCCCC),
+        ((0, 0, 100, 100,  0),  0, 0xFF4040),
+        ((0, 0, 50,   50,  0), 10, 0xFF0FFF)
     ], key=cmp_to_key(cmp_objects))
+print(objects)
+surf = draw(objects)
 
-surf = Surface((10000, 10000))
+#surf.fill((240, 240, 240))
 
-surf.fill((240, 240, 240))
-draw(surf, objects)
 
 running = True
 redraw = True
 
 screen = pygame.display.set_mode((1600, 900))
 screen.fill((240, 240, 240))
-move = (-1390, -40)
+move = (0, 0)
 
 #noinspection PyArgumentList
 pygame.key.set_repeat(500, 30)

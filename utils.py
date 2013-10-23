@@ -5,11 +5,14 @@ from functools import reduce
 CELL_WITH = 32
 CELL_HEIGHT = 16
 
+CELL_WITH_DIV_2 = CELL_WITH // 2
+CELL_HEIGHT_DIV_2 = CELL_HEIGHT // 2
+
 COLORS = 255 * 255 * 255
 
 
 def ij_to_xy(i, j):
-    return 8 * (i + j), 4 * (j - i)
+    return CELL_WITH_DIV_2 * (i + j), CELL_HEIGHT_DIV_2 * (j - i)
 
 
 def randclr():

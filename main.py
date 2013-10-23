@@ -39,52 +39,53 @@ def get_default_move(s, v):
 
     return (w_s - w_v) / 2, (h_s - h_v) / 2
 
-objects = sorted(
-    [
-        ((0,   0, 300, 300,  0),   0,        0xCCCCCC),
-        ((0,   0, 100, 100,  0),   0, utils.randclr()),
-        ((0,   0,  50,  50,  0), 100, utils.randclr()),
-        ((0,  80, 300,  10,  0),   0,        0x090909),
-        ((90, 70,  60,  10,  0), 160, utils.randclr()),
-        ((30, 70,  60,  10,  0), 160, utils.randclr()),
-        ((80,  0,  10, 300,  0),   0,        0x090909),
-        ((90,  0,  10,  60,  0), 200, utils.randclr()),
-        ((70,  0,  10,  40,  0), 150, utils.randclr())
-    ], key=cmp_to_key(cmp_objects))
-print(objects)
-surf = draw(objects)
 
-#surf.fill((240, 240, 240))
+def main():
+    objects = sorted(
+        [
+            ((0,   0, 300, 300,  0),   0,        0xCCCCCC),
+            ((0,   0, 100, 100,  0),   0, utils.randclr()),
+            ((0,   0,  50,  50,  0), 100, utils.randclr()),
+            ((0,  80, 300,  10,  0),   0,        0x090909),
+            ((90, 70,  60,  10,  0), 160, utils.randclr()),
+            ((30, 70,  60,  10,  0), 160, utils.randclr()),
+            ((80,  0,  10, 300,  0),   0,        0x090909),
+            ((90,  0,  10,  60,  0), 200, utils.randclr()),
+            ((70,  0,  10,  40,  0), 150, utils.randclr())
+        ], key=cmp_to_key(cmp_objects))
+    print(objects)
+    surf = draw(objects)
 
+    running = True
+    redraw = True
 
-running = True
-redraw = True
+    screen = pygame.display.set_mode((1600, 900))
+    screen.fill((240, 240, 240))
+    move = get_default_move(screen, surf)
 
-screen = pygame.display.set_mode((1600, 900))
-screen.fill((240, 240, 240))
-move = get_default_move(screen, surf)
+    #noinspection PyArgumentList
+    pygame.key.set_repeat(500, 30)
 
-#noinspection PyArgumentList
-pygame.key.set_repeat(500, 30)
+    move_dict = {
+        K_DOWN:  (0, -10),
+        K_UP:    (0,  10),
+        K_LEFT:  (10,  0),
+        K_RIGHT: (-10, 0)
+    }
 
-move_dict = {
-    K_DOWN: (0, -10),
-    K_UP: (0, 10),
-    K_LEFT: (10, 0),
-    K_RIGHT: (-10, 0)
-}
+    while running:
+        events = pygame.event.get()
+        for e in events:
+            running = e.type != QUIT and not (e.type == KEYDOWN and e.key == K_ESCAPE)
+            if e.type == KEYDOWN and e.key in (K_LEFT, K_RIGHT, K_UP, K_DOWN):
+                redraw = True
+                move = vecadd(move, move_dict[e.key])
 
-while running:
-    events = pygame.event.get()
-    for e in events:
-        running = e.type != QUIT and not (e.type == KEYDOWN and e.key == K_ESCAPE)
-        if e.type == KEYDOWN and e.key in (K_LEFT, K_RIGHT, K_UP, K_DOWN):
-            redraw = True
-            move = vecadd(move, move_dict[e.key])
+        if redraw:
+            redraw = False
+            screen.fill((240, 240, 240))
+            screen.blit(surf, move)
 
-    if redraw:
-        redraw = False
-        screen.fill((240, 240, 240))
-        screen.blit(surf, move)
+        pygame.display.flip()
 
-    pygame.display.flip()
+main()

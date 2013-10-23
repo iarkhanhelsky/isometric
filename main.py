@@ -48,12 +48,12 @@ def main():
             ((0,   0,  50,  50,  0), 100, utils.randclr()),
             ((0,  80, 300,  10,  0),   0,        0x090909),
             ((90, 70,  60,  10,  0), 160, utils.randclr()),
-            ((30, 70,  60,  10,  0), 160, utils.randclr()),
+            ((20, 70,  60,  10,  0), 160, utils.randclr()),
             ((80,  0,  10, 300,  0),   0,        0x090909),
             ((90,  0,  10,  60,  0), 200, utils.randclr()),
             ((70,  0,  10,  40,  0), 150, utils.randclr())
         ], key=cmp_to_key(cmp_objects))
-    print(objects)
+
     surf = draw(objects)
 
     running = True

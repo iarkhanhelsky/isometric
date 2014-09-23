@@ -1,5 +1,5 @@
 from pygame.rect import Rect
-from utils import randclr
+from utils import randclr, intersects
 from random import randint
 from rules import rule
 
@@ -49,3 +49,19 @@ def road_populate(w, stop_rows, stop_cols, i0, j0, rows, cols):
                     road_populate(w, stop_rows, stop_cols, i0, j + 1, rows, cols), road]
     else:
         return []
+
+
+def generate_sites(max_x, max_y, max_width, max_height, count):
+    rects = []
+    while len(rects) < count:
+        (w, h) = (randint(1, max_width), randint(1, max_height))
+        r = (randint(0, max_x - w), randint(0, max_y - h), w, h)
+        if len([p for p in rects if intersects(r, p)]) == 0:
+            rects = rects + [r]
+
+    return rects
+
+
+def generate_buildings(max_x, max_y, max_width, max_height, tall, count):
+    sites = generate_sites(max_x, max_y, max_width, max_height, count)
+    return [((x, y, r, c, 0), randint(0,tall), randclr()) for (x, y, r, c) in sites]
